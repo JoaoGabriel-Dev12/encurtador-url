@@ -2,29 +2,46 @@ package com.joaogabriel.encurtador.model;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.joaogabriel.encurtador.model.dtos.StatusUser;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "user_tb")
-public class User implements Serializable{
+public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(nullable = false)
 	private String usename;
+	@Column(nullable = false)
 	private String email;
+	@Column(nullable = false)
 	private String senha;
+	@Column(nullable = false)
 	private OffsetDateTime dataUltimoLogin;
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	private StatusUser status;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	private List<UrlEncurtada> urls = new ArrayList<>();
 
 	public User() {
 	}
@@ -85,6 +102,10 @@ public class User implements Serializable{
 
 	public void setStatus(StatusUser status) {
 		this.status = status;
+	}
+
+	public List<UrlEncurtada> getUrls() {
+		return urls;
 	}
 
 	@Override
