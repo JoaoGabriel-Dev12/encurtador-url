@@ -1,4 +1,4 @@
-package com.joaogabriel.encurtador.model.dtos;
+package com.joaogabriel.encurtador.model.enums;
 
 public enum StatusUser {
 	CONECTADO,
