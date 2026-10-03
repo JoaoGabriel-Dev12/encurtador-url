@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.joaogabriel.encurtador.model.dtos.StatusUser;
+import com.joaogabriel.encurtador.dtos.request.UserRequest;
+import com.joaogabriel.encurtador.model.enums.StatusUser;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -54,6 +55,15 @@ public class User implements Serializable {
 		this.senha = senha;
 		this.dataUltimoLogin = dataUltimoLogin;
 		this.status = status;
+	}
+	
+	public User(UserRequest request) {
+		this.id = null;
+		this.usename = request.username();
+		this.email = request.email();
+		this.senha = null;
+		this.dataUltimoLogin = OffsetDateTime.now();
+		this.status = StatusUser.CONECTADO;
 	}
 
 	public Long getId() {
